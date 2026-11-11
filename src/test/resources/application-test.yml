@@ -1,0 +1,15 @@
+# Used by the tests only: in-memory H2 instead of PostgreSQL, and a quiet scheduler.
+DATABASE_URL: "jdbc:h2:mem:ascend;MODE=PostgreSQL;DB_CLOSE_DELAY=-1;DATABASE_TO_LOWER=TRUE"
+DB_USERNAME: sa
+DB_PASSWORD: ""
+
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+
+ascend:
+  jwt:
+    secret: "test-secret-test-secret-test-secret-1234"
+  reminders:
+    tick-ms: 3600000

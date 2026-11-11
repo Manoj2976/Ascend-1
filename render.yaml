@@ -1,0 +1,31 @@
+# Render Blueprint: New + -> Blueprint, point it at your GitHub repo.
+services:
+  - type: web
+    name: ascend-backend
+    runtime: docker
+    plan: free
+    healthCheckPath: /api/health
+    envVars:
+      - key: DATABASE_URL
+        sync: false          # connection string from your Postgres host (see README: do NOT use Render's free DB, it expires in 30 days)
+      - key: JWT_SECRET
+        generateValue: true
+      - key: CORS_ORIGINS
+        sync: false          # e.g. https://your-app.vercel.app
+      - key: PUBLIC_URL
+        sync: false          # e.g. https://ascend-backend.onrender.com
+      - key: VAPID_PUBLIC_KEY
+        sync: false
+      - key: VAPID_PRIVATE_KEY
+        sync: false
+      - key: VAPID_SUBJECT
+        value: mailto:you@example.com
+      - key: TELEGRAM_BOT_TOKEN
+        sync: false
+      - key: TELEGRAM_BOT_USERNAME
+        sync: false
+      - key: TELEGRAM_WEBHOOK_SECRET
+        sync: false          # letters and digits only (it becomes part of a URL path)
+      - key: ALLOW_REGISTRATION
+        value: "true"        # set to false after you create your account
+

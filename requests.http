@@ -1,0 +1,55 @@
+### Works in VS Code (REST Client extension) and IntelliJ. Set the host once:
+@host = http://localhost:8080
+
+### Health
+GET {{host}}/api/health
+
+### Register (first run only)
+# @name register
+POST {{host}}/api/auth/register
+Content-Type: application/json
+
+{ "email": "you@example.com", "password": "a-long-password", "name": "Manoj" }
+
+### Login
+# @name login
+POST {{host}}/api/auth/login
+Content-Type: application/json
+
+{ "email": "you@example.com", "password": "a-long-password" }
+
+###
+@token = {{login.response.body.token}}
+
+### Create the 9 PM Bath reminder (repeats every day)
+POST {{host}}/api/tasks
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{ "title": "Bath", "date": "2026-11-10", "time": "21:00", "category": "Health", "repeat": "daily" }
+
+### List tasks
+GET {{host}}/api/tasks
+Authorization: Bearer {{token}}
+
+### Tick a task for a day (replace the id)
+POST {{host}}/api/tasks/REPLACE_WITH_TASK_ID/toggle
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{ "date": "2026-11-10" }
+
+### Targets
+POST {{host}}/api/goals
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{ "type": "FINAL", "title": "Get placed at a product company", "target": 100, "deadline": "2027-06-30" }
+
+### Send a test notification to every channel you set up
+POST {{host}}/api/notifications/test
+Authorization: Bearer {{token}}
+
+### Everything in one call
+GET {{host}}/api/state
+Authorization: Bearer {{token}}

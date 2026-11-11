@@ -1,0 +1,42 @@
+server:
+  port: ${PORT:8080}
+  shutdown: graceful
+  forward-headers-strategy: framework
+
+spring:
+  application:
+    name: ascend-backend
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: update        # creates/updates tables on startup. Switch to Flyway when the schema settles.
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: UTC
+  jackson:
+    default-property-inclusion: always
+
+ascend:
+  # Postgres connection is read in DataSourceConfig from DATABASE_URL (jdbc: or postgres:// form),
+  # DB_USERNAME and DB_PASSWORD.
+  jwt:
+    secret: ${JWT_SECRET:}            # >= 32 chars. If empty a random one is generated (logins reset on restart).
+    expiry-days: ${JWT_EXPIRY_DAYS:30}
+  cors-origins: ${CORS_ORIGINS:http://localhost:5173}   # comma-separated, e.g. https://your-app.vercel.app
+  allow-registration: ${ALLOW_REGISTRATION:true}         # set false after you create your account
+  vapid:
+    public-key: ${VAPID_PUBLIC_KEY:}
+    private-key: ${VAPID_PRIVATE_KEY:}
+    subject: ${VAPID_SUBJECT:mailto:you@example.com}
+  telegram:
+    bot-token: ${TELEGRAM_BOT_TOKEN:}
+    bot-username: ${TELEGRAM_BOT_USERNAME:}
+    webhook-secret: ${TELEGRAM_WEBHOOK_SECRET:}
+    public-url: ${PUBLIC_URL:}        # https://your-service.onrender.com (needed to register the webhook)
+  reminders:
+    tick-ms: ${REMINDER_TICK_MS:15000}
+
+logging:
+  level:
+    com.ascend: INFO
